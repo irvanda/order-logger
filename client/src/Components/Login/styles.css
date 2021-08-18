@@ -1,0 +1,12 @@
+.container {
+  min-height: 100vh;
+}
+
+.wrapper {
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0px 0px 90px 13px rgba(140, 152, 169, 0.26);
+  -webkit-box-shadow: 0px 0px 90px 13px rgba(140, 152, 169, 0.26);
+  -moz-box-shadow: 0px 0px 90px 13px rgba(140, 152, 169, 0.26);
+}
