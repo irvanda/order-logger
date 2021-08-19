@@ -1,12 +1,10 @@
-import Cookies from 'js-cookie';
 import Config from '../Utils/config';
-
-const { get } = Cookies;
+import { getToken } from './storage';
 
 const Fetch = async (method, path, data) => {
-  const token = get(`token${Config.cookieType}`);
+  const token = getToken(`token${Config.cookieType}`);
   const baseUrl = Config.apiUrl;
-  return await fetch(baseUrl + path, {
+  const response = await fetch(baseUrl + path, {
     method: method || 'GET',
     body: data ? JSON.stringify(data) : undefined,
     headers: {
@@ -14,6 +12,7 @@ const Fetch = async (method, path, data) => {
       authorization: token ? `Bearer ${token}` : '',
     },
   });
+  return response.json();
 };
 
 export default Fetch;

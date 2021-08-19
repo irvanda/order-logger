@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import './styles.css';
 import Api from '../../Api';
+import { setToken } from '../../Utils/storage';
 
-const Login = () => {
+const Login = (props) => {
+  const { setIsLoggedin } = props;
   const [data, setData] = useState({
     email: { value: '', error: false },
     password: { value: '', error: false },
@@ -25,8 +27,13 @@ const Login = () => {
         email: data.email.value,
         password: data.password.value,
       })
-        .then((res) => console.log('check00: ', res))
-        .catch((err) => console.log('check01: ', err));
+        .then((res) => {
+          if (res.success) {
+            setToken(res.data.token);
+            setIsLoggedin(true);
+          }
+        })
+        .catch((err) => console.log('err fetch: ', err));
     }
   };
   const handleChange = (type, value) => {
@@ -64,8 +71,8 @@ const Login = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
-                      error={data.email.error}
                       required
+                      error={data.email.error}
                       fullWidth
                       label="Email"
                       name="email"
@@ -76,8 +83,8 @@ const Login = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      error={data.password.error}
                       required
+                      error={data.password.error}
                       fullWidth
                       label="Password"
                       name="password"
@@ -90,7 +97,7 @@ const Login = () => {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Button color="primary" fullWidth type="submit" variant="contained" onClick={onSubmit}>
+                <Button color="primary" fullWidth variant="contained" onClick={onSubmit}>
                   Log in
                 </Button>
               </Grid>

@@ -1,5 +1,7 @@
 import Auth from './auth';
 
-export default {
+const Api = {
   Auth,
 };
+
+export default Api;
