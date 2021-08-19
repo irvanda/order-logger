@@ -32,7 +32,6 @@ const IsLoggedin = async () => {
   const token = getToken();
   if (token) {
     const res = await Api.Auth.GetUser();
-    console.log('check00: ', res);
     if (res.success) return true;
     return false;
   }
