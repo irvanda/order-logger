@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const express = require('express');
-const { Unauthorized } = require('http-errors');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
 const router = express.Router();
@@ -90,7 +89,8 @@ router.get('/user', async (req, res) => {
     });
 
   jwt.verify(token, TOKEN_KEY, async (err, decode) => {
-    if (err) return res.status(403).send({ success: false, error: { code: 403, message: `Forbidden, ${err.message}` } });
+    if (err)
+      return res.status(403).send({ success: false, error: { code: 403, message: `Forbidden, ${err.message}` } });
     const user = await User.findOne({ email: decode.email });
     const { password, ...newUser } = user._doc;
     return res.status(200).send({ success: true, data: newUser });
