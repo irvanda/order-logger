@@ -34,5 +34,5 @@ client:
 - [x] Client > material UI
 - [x] Client > store token on cookies
 - [x] Client > Date formatter
-- [] Client > Order page
-- [] Client > Confirm Order page
+- [ ] Client > Order page
+- [ ] Client > Confirm Order page
