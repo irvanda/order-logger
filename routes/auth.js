@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
+const UserLog = require('../model/user-log');
 const router = express.Router();
 require('dotenv').config();
 const { TOKEN_KEY } = process.env;
@@ -53,6 +54,12 @@ router.post('/login', async (req, res) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (validPassword) {
       const { password, ...newUser } = user._doc;
+      const userLog = new UserLog({
+        userId: newUser._id,
+        email: newUser.email,
+        role: newUser.role,
+      });
+      userLog.save();
       res.status(200).json({ success: true, data: newUser });
     } else {
       res.status(400).json({

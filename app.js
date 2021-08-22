@@ -13,6 +13,7 @@ dbConnect()
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const productItemRouter = require('./routes/product-item');
+const orderRouter = require('./routes/order');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/product-items', productItemRouter);
+app.use('/order', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

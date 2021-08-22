@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
 
-const UserLogSchema = new mongoose.Schema({
-  productItems: [
-    {
-      product: { type: Number },
+const OrderSchema = new mongoose.Schema(
+  {
+    productItems: [
+      {
+        product: { type: Number },
+        name: { type: String },
+        price: { type: Number },
+        quantity: { type: Number },
+      },
+    ],
+    total: { type: Number },
+    createdBy: {
       name: { type: String },
-      price: { type: Number },
-      quantity: { type: Number },
+      email: { type: String },
+      role: { type: Number },
     },
-  ],
-  total: { type: Number },
-  createdAt: { type: Date, default: Date.now },
-  createdBy: {
-    name: { type: String },
-    email: { type: String },
-    role: { type: Number },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('order', UserSchema);
+module.exports = mongoose.model('order', OrderSchema);
