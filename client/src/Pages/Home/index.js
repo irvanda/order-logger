@@ -17,10 +17,10 @@ const myTheme = createTheme({
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
+      light: '#ffffff',
+      main: '#fafafa',
+      dark: '#f0f0f0',
+      contrastText: '#3f50b5',
     },
     textPrimary: {
       main: '#fff',
@@ -40,6 +40,7 @@ const IsLoggedin = async () => {
 
 const Home = () => {
   const [isLoggedin, setIsloggedin] = React.useState(false);
+  const [productItems, setProductItems] = React.useState(undefined);
   React.useEffect(() => {
     async function init() {
       const res = await IsLoggedin();
@@ -47,10 +48,23 @@ const Home = () => {
     }
     init();
   }, []);
+  React.useEffect(() => {
+    async function init() {
+      const res = await Api.ProductItems.GetList(0);
+      setProductItems(res.data);
+    }
+    if (isLoggedin && !productItems) {
+      init();
+    }
+  }, [isLoggedin, productItems]);
   return (
     <ThemeProvider theme={myTheme}>
       <Container maxWidth="sm" className="box-shadow layout">
-        {isLoggedin ? <Order setIsLoggedin={setIsloggedin} /> : <Login setIsLoggedin={setIsloggedin} />}
+        {isLoggedin ? (
+          <Order setIsLoggedin={setIsloggedin} productItems={productItems} />
+        ) : (
+          <Login setIsLoggedin={setIsloggedin} />
+        )}
       </Container>
     </ThemeProvider>
   );

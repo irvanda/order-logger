@@ -19,17 +19,11 @@ router.post('/', async (req, res) => {
     const productItems = [];
     for (const item of list) {
       const productItem = await ProductItem.findById(item.id);
-      console.log('check02: ', item);
       productItem._doc.quantity = item.quantity;
-      console.log('check03: ', item.quantity);
-      console.log('check01: ', productItem._doc.quantity);
-      console.log('check04: ', productItem);
       productItems.push(productItem);
       total = total + productItem._doc.price * item.quantity;
-      console.log('check 05: ', total);
     }
 
-    console.log('check06: ', total);
     const order = new Order({
       productItems,
       total,

@@ -8,7 +8,6 @@ const GetUser = async (req) => {
   const token = authHeader && authHeader.split(' ')[1];
   const decode = jwt.verify(token, TOKEN_KEY);
   const response = await User.findOne({ email: decode.email });
-  console.log('check00: ', response);
   const { password, ...user } = response._doc;
   return user;
 };

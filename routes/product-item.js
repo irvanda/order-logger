@@ -4,10 +4,12 @@ const ValidateUser = require('../utils/validateUser');
 const ProductItem = require('../model/product-item');
 
 // Get Product Items
-router.get('/', async (req, res) => {
+router.get('/:product', async (req, res) => {
   const validation = ValidateUser(req, res);
+  const productId = req.params.product;
+  console.log('productId: ', productId);
   if (validation === true) {
-    const productItems = await ProductItem.find();
+    const productItems = await ProductItem.find(productId !== '0' ? { product: req.params.product } : {});
     return res.status(200).send({ success: true, data: productItems });
   }
 
@@ -58,7 +60,7 @@ router.put('/update/:id', async (req, res) => {
     }
 
     try {
-      const productItem = await ProductItem.findOneAndUpdate({ _id: id }, body);
+      const productItem = await ProductItem.findOneAndUpdate({ _id: id }, body, { new: true });
       return res.status(200).send({ success: true, data: productItem });
     } catch (err) {
       if (err)
